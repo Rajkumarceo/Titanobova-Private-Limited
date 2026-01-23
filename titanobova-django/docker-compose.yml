@@ -1,0 +1,104 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: titanobova_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secure-password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Application
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 --workers 4 titanobova_project.wsgi:application"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=change-this-in-production
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=titanobova_db
+      - DB_USER=postgres
+      - DB_PASSWORD=secure-password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Celery Worker
+  celery:
+    build: .
+    command: celery -A titanobova_project worker -l info
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=change-this-in-production
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=titanobova_db
+      - DB_USER=postgres
+      - DB_PASSWORD=secure-password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
+      - redis
+      - web
+
+  # Celery Beat (Scheduled Tasks)
+  celery-beat:
+    build: .
+    command: celery -A titanobova_project beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=change-this-in-production
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=titanobova_db
+      - DB_USER=postgres
+      - DB_PASSWORD=secure-password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:

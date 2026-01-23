@@ -1,0 +1,97 @@
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8D4B8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4A574;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A876;stop-opacity:1" />
+    </linearGradient>
+    <filter id="goldShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Crown -->
+  <g filter="url(#goldShadow)">
+    <!-- Crown Base -->
+    <rect x="140" y="30" width="120" height="25" rx="3" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="2"/>
+    
+    <!-- Crown Points -->
+    <!-- Center Peak -->
+    <polygon points="200,10 185,35 215,35" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1.5"/>
+    
+    <!-- Left Peak -->
+    <polygon points="150,20 140,42 165,38" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1.5"/>
+    
+    <!-- Right Peak -->
+    <polygon points="250,20 260,42 235,38" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1.5"/>
+    
+    <!-- Left Side Peak -->
+    <polygon points="120,32 110,50 135,42" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1.5"/>
+    
+    <!-- Right Side Peak -->
+    <polygon points="280,32 290,50 265,42" fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1.5"/>
+    
+    <!-- Jewels on Crown -->
+    <circle cx="160" cy="35" r="4" fill="#FFD700" opacity="0.8"/>
+    <circle cx="200" cy="28" r="5" fill="#FFD700"/>
+    <circle cx="240" cy="35" r="4" fill="#FFD700" opacity="0.8"/>
+  </g>
+  
+  <!-- Shield Container -->
+  <g filter="url(#goldShadow)">
+    <!-- Shield Outline -->
+    <path d="M 200 60 L 140 100 L 130 180 Q 130 240 200 280 Q 270 240 270 180 L 260 100 Z" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="3" stroke-linejoin="round"/>
+    
+    <!-- Shield Inner Border -->
+    <path d="M 200 70 L 150 105 L 141 175 Q 141 230 200 265 Q 259 230 259 175 L 250 105 Z" 
+          fill="none" stroke="#A68860" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Shield Highlight -->
+    <ellipse cx="190" cy="120" rx="35" ry="45" fill="#F5E6D3" opacity="0.3"/>
+  </g>
+  
+  <!-- Left Wing -->
+  <g filter="url(#goldShadow)">
+    <path d="M 140 130 Q 100 120 80 140 Q 85 155 120 150 Q 135 145 140 130" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="2"/>
+    <!-- Wing Details -->
+    <line x1="100" y1="130" x2="110" y2="145" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+    <line x1="95" y1="138" x2="108" y2="148" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+    <line x1="105" y1="145" x2="118" y2="150" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+  </g>
+  
+  <!-- Right Wing -->
+  <g filter="url(#goldShadow)">
+    <path d="M 260 130 Q 300 120 320 140 Q 315 155 280 150 Q 265 145 260 130" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="2"/>
+    <!-- Wing Details -->
+    <line x1="300" y1="130" x2="290" y2="145" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+    <line x1="305" y1="138" x2="292" y2="148" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+    <line x1="295" y1="145" x2="282" y2="150" stroke="#B8956A" stroke-width="1.5" opacity="0.7"/>
+  </g>
+  
+  <!-- Stylized S Letter with Snake Design -->
+  <g filter="url(#goldShadow)">
+    <text x="200" y="190" font-size="120" font-weight="900" font-family="Georgia, serif" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="1"
+          text-anchor="middle" dominant-baseline="middle">S</text>
+  </g>
+  
+  <!-- Shield Bottom Accent -->
+  <line x1="155" y1="270" x2="245" y2="270" stroke="#B8956A" stroke-width="2" opacity="0.8"/>
+  
+  <!-- Main Text -->
+  <g filter="url(#goldShadow)">
+    <text x="200" y="340" font-size="48" font-weight="900" font-family="Arial, sans-serif" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="0.5"
+          text-anchor="middle" letter-spacing="3">TITANOBOVA</text>
+    
+    <text x="200" y="390" font-size="24" font-weight="300" font-family="Arial, sans-serif" 
+          fill="url(#goldGradient)" stroke="#B8956A" stroke-width="0.3"
+          text-anchor="middle" letter-spacing="2">PRIVATE LIMITED</text>
+  </g>
+  
+  <!-- Decorative Line Elements -->
+  <line x1="80" y1="410" x2="320" y2="410" stroke="url(#goldGradient)" stroke-width="2" opacity="0.6"/>
+</svg>

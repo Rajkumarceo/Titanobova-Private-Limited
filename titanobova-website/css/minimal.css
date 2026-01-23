@@ -1,0 +1,113 @@
+/* Minimalistic / Unique Theme for Front Page */
+:root{
+  --bg: #fbfcfd;
+  --fg: #0f1724;
+  --muted: #6b7280;
+  --accent: #0ea5a4; /* teal-ish */
+  --glass: rgba(255,255,255,0.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+}
+
+/* Layout container */
+.nav-container, .services-overview, .about-preview, .footer-content{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 1rem;
+}
+
+/* Nav: minimal and floating */
+.navbar{
+  position:sticky;top:18px;z-index:40;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;padding:0.5rem 0;
+}
+.nav-container{display:flex;align-items:center;justify-content:space-between;padding:0}
+.logo img{height:46px;border-radius:6px;display:block}
+.nav-menu{display:flex;gap:1rem;list-style:none}
+.nav-menu a{color:var(--fg);padding:0.4rem 0.65rem;border-radius:6px;font-weight:600;opacity:0.9}
+.nav-menu a:hover{color:var(--accent);background:transparent;opacity:1}
+.hamburger{display:none}
+
+/* Hero: centered card with lots of whitespace */
+.hero{display:flex;align-items:center;justify-content:center;min-height:62vh;padding:4rem 1rem}
+.hero-content{max-width:780px;text-align:center;padding:3.2rem;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));box-shadow:0 10px 30px rgba(15,23,36,0.06);backdrop-filter:blur(6px)}
+.hero-content h2{font-size:2.4rem;margin-bottom:0.6rem;letter-spacing:0.2px}
+.hero-content p{color:var(--muted);margin-bottom:1.25rem;font-size:1.05rem}
+.cta-button{display:inline-block;padding:0.65rem 1.25rem;border-radius:10px;border:2px solid var(--accent);color:var(--accent);font-weight:700;background:transparent;cursor:pointer}
+.cta-button:hover{background:var(--accent);color:white;box-shadow:0 8px 26px rgba(14,165,164,0.12)}
+
+/* Services: clean grid with thin cards */
+.services-overview{padding:3rem 0}
+.services-overview h2{text-align:center;font-size:1.6rem;margin-bottom:1.5rem;color:var(--fg)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.service-card{background:transparent;border:1px solid rgba(15,23,36,0.06);padding:1.25rem;border-radius:12px;display:flex;flex-direction:column;gap:0.6rem;align-items:flex-start}
+.service-icon{font-size:1.6rem}
+.service-card h3{margin:0;color:var(--fg);font-size:1.05rem}
+.service-card p{color:var(--muted);font-size:0.95rem}
+
+/* About preview */
+.about-preview{padding:2.5rem 0}
+.preview-content{background:transparent;padding:1rem;border-radius:10px}
+.preview-content h2{font-size:1.4rem;margin-bottom:0.6rem}
+.read-more{color:var(--accent);font-weight:700}
+
+/* Footer: minimal */
+.footer{padding:2rem 0;color:var(--muted);border-top:1px solid rgba(15,23,36,0.04);background:transparent}
+.footer-content{display:flex;gap:2rem;align-items:flex-start;justify-content:space-between}
+.footer-section h4{color:var(--fg);font-size:0.95rem;margin-bottom:0.35rem}
+.footer-section p, .footer-section li a{color:var(--muted);font-size:0.95rem}
+.footer-bottom{text-align:center;padding-top:1rem;color:var(--muted)}
+
+/* Utility */
+@media (max-width:768px){
+  .nav-menu{display:none}
+  .hamburger{display:block}
+  .hero{padding:2.5rem 1rem}
+  .hero-content h2{font-size:1.8rem}
+  .services-grid{grid-template-columns:1fr}
+  .footer-content{flex-direction:column;gap:1rem}
+}
+
+:focus{outline:3px solid rgba(14,165,164,0.18);outline-offset:3px}
+
+/* Content section (services & deliverables) */
+.content-section{padding:2.5rem 0}
+.content-section h2{font-size:1.6rem;margin-bottom:1rem;color:var(--fg)}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.value-item{background:transparent;border:1px solid rgba(15,23,36,0.06);padding:1rem;border-radius:10px}
+.value-item h4{margin:0 0 0.5rem 0;color:var(--fg)}
+.value-item p{color:var(--muted)}
+
+/* testimonials */
+.why-choose{padding:2.5rem 0}
+.why-choose h2{text-align:center;font-size:1.6rem;margin-bottom:1.5rem;color:var(--fg)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.feature{background:transparent;border:1px solid rgba(15,23,36,0.06);padding:1rem;border-radius:10px}
+.feature h4{margin:0 0 0.5rem;color:var(--fg)}
+.feature p{color:var(--muted)}
+.testimonial .quote{font-style:italic;color:var(--fg);margin-bottom:0.6rem}
+.testimonial .by{color:var(--muted);font-size:0.9rem}
+
+/* Contact */
+.contact-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem}
+.contact-form-wrapper,.contact-info-wrapper{background:transparent;border:1px solid rgba(15,23,36,0.06);padding:1.25rem;border-radius:10px}
+.contact-form-wrapper h2,.contact-info-wrapper h2{margin-top:0}
+.contact-form .form-group{margin-bottom:1rem}
+.contact-form input,.contact-form textarea{width:100%;padding:0.65rem;border:1px solid rgba(15,23,36,0.06);border-radius:8px;font-family:inherit}
+.submit-btn{width:100%;padding:0.8rem;background:var(--accent);color:white;border-radius:8px;border:0;font-weight:700}
+
+@media (max-width:768px){
+  .contact-container{grid-template-columns:1fr}
+}
+
+/* End minimal theme */

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Payment — Titanobova</title>
+  <link rel="stylesheet" href="../css/professional.css">
+  <link rel="icon" href="../assets/titanobova%20heading%20logo.png" type="image/png">
+  <style>
+    html { opacity: 0; transition: opacity .12s ease-in; }
+    @media (prefers-reduced-motion: reduce) { html { transition: none; } }
+  </style>
+  <script src="/js/fouc.js" defer></script>
+</head>
+<body>
+  <main style="max-width:700px;margin:40px auto;padding:20px;text-align:left;">
+    <h1>Payment Instructions</h1>
+    <p id="info">Loading...</p>
+    <div id="details" style="display:none">
+      <p><strong>Amount:</strong> <span id="amount">₹0</span></p>
+      <p><strong>Payment methods:</strong></p>
+      <ul>
+        <li>UPI: titanobova@upi</li>
+        <li>Bank Transfer: Account XYZ — IFSC: ABCD0000</li>
+        <li>Pay via a card: Contact hello@titanobova.com for a payment link</li>
+      </ul>
+      <p>After payment, please email payment proof to <a href="mailto:hello@titanobova.com">hello@titanobova.com</a> with your registration ID.</p>
+      <button id="copy">Copy UPI ID</button>
+    </div>
+  </main>
+  <script src="/js/payment.js" defer></script>
+</body>
+</html>

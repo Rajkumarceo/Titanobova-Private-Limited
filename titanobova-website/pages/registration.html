@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Registration — Titanobova</title>
+  <meta name="description" content="Register for our courses and get a certificate, plus free internship placement.">
+  <link rel="stylesheet" href="../css/professional.css">
+  <link rel="icon" href="../assets/titanobova%20heading%20logo.png" type="image/png">
+    <style>
+      html { opacity: 0; transition: opacity .12s ease-in; }
+      @media (prefers-reduced-motion: reduce) { html { transition: none; } }
+    </style>
+    <script src="/js/fouc.js" defer></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo"><strong>TITANOBOVA</strong></div>
+      <ul class="nav-menu">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="registration.html" class="active">Courses</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="content-section">
+    <section style="max-width:900px;margin:40px auto;padding:24px;background:#fff;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.06);">
+      <h1 style="text-align:center">Register for a Course</h1>
+      <p style="text-align:center;color:#555;margin-bottom:24px">All courses include a Titanobova completion certificate and a chance for a free internship placement.</p>
+
+      <form id="registrationForm" class="contact-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" type="tel" />
+        </div>
+
+        <div class="form-group">
+          <label for="course">Select Course</label>
+          <select id="course" name="course" required>
+            <option value="Python Basic|1500">Python — Basic (₹1500)</option>
+            <option value="Backend Complete|4000">Complete Backend — (₹4000)</option>
+            <option value="Frontend Complete|4000">Complete Frontend — (₹4000)</option>
+            <option value="Java Basic|2000">Java — Basic (₹2000)</option>
+            <option value="Java Advanced|4000">Java — Advanced (₹4000)</option>
+            <option value="C Basic|2000">C — Basic (₹2000)</option>
+            <option value="C Advanced|4000">C — Advanced (₹4000)</option>
+            <option value="C++ Basic|2000">C++ — Basic (₹2000)</option>
+            <option value="C++ Advanced|4000">C++ — Advanced (₹4000)</option>
+            <option value="MongoDB Basic|2000">MongoDB — Basic (₹2000)</option>
+            <option value="MongoDB Advanced|4000">MongoDB — Advanced (₹4000)</option>
+            <option value="MERN Basic|2000">MERN — Basic (₹2000)</option>
+            <option value="MERN Advanced|4000">MERN — Advanced (₹4000)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="level">Level (optional)</label>
+          <input id="level" name="level" placeholder="Basic / Advanced / Certificate" />
+        </div>
+
+        <div class="form-group">
+          <label>Price</label>
+          <div id="priceDisplay" style="font-weight:600;font-size:1.1rem">₹1500</div>
+          <input type="hidden" id="price" name="price" value="1500" />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" rows="3"></textarea>
+        </div>
+
+        <div style="margin:16px 0;color:#333">
+          <strong>Benefits:</strong>
+          <ul>
+            <li>Official Titanobova certificate on completion.</li>
+            <li>Free internship consideration for select candidates.</li>
+            <li>Practical assignments and mentor support.</li>
+          </ul>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center">
+          <button type="submit" name="action" value="paylater" class="submit-btn">Register & Pay Later</button>
+          <button type="submit" name="action" value="paynow" class="submit-btn secondary" style="background:linear-gradient(90deg,#4b6be6,#6fa1ff);border:none;color:#fff">Register & Pay Now</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer" style="margin-top:40px">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Titanobova Pvt Limited</h4>
+        <p>Professional Business Solutions Provider</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const courseSelect = document.getElementById('course');
+      const priceInput = document.getElementById('price');
+      const priceDisplay = document.getElementById('priceDisplay');
+      function updatePrice(){
+        const v = courseSelect.value.split('|');
+        const p = v[1] || '0';
+        priceInput.value = p;
+        priceDisplay.textContent = '₹' + p;
+      }
+      courseSelect.addEventListener('change', updatePrice);
+      updatePrice();
+
+      const form = document.getElementById('registrationForm');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const action = (e.submitter && e.submitter.value) ? e.submitter.value : 'paylater';
+        const name = document.getElementById('name').value || '';
+        const email = document.getElementById('email').value || '';
+        const phone = document.getElementById('phone').value || '';
+        const notes = document.getElementById('notes').value || '';
+        const courseParts = courseSelect.value.split('|');
+        const course = courseParts[0] || '';
+        const price = parseInt(courseParts[1] || '0', 10);
+        const level = document.getElementById('level').value || '';
+
+        const payload = { name, email, phone, course, level, price, notes };
+        const backendOrigin = 'http://localhost:4000';
+        const endpoint = (window.location.origin === backendOrigin) ? '/api/courses/register' : `${backendOrigin}/api/courses/register`;
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(async res => {
+          if (!res.ok) {
+            const txt = await res.text().catch(()=>null);
+            alert('Registration failed: ' + (txt || res.statusText || res.status));
+            return;
+          }
+          const body = await res.json().catch(()=>null);
+          if (body && body.paymentUrl) {
+            if (action === 'paynow') {
+              // Immediately redirect to the payment instructions page
+              window.location.href = body.paymentUrl;
+              return;
+            }
+            // For paylater, ask user optionally to open payment page
+            if (confirm('Registration received. Open payment instructions now?')) {
+              window.location.href = body.paymentUrl; return;
+            }
+          }
+          alert('Registration received. We will contact you with payment details and internship options.');
+          form.reset();
+          updatePrice();
+        }).catch(err => {
+          console.error('Registration network error', err);
+          alert('Network error. Ensure backend is running at http://localhost:4000');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

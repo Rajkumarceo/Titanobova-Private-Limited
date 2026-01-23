@@ -1,0 +1,39 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8D4B8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A876;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Crown -->
+  <g>
+    <rect x="60" y="15" width="80" height="18" rx="2" fill="url(#goldGrad)" stroke="#B8956A" stroke-width="1.5"/>
+    <polygon points="100,8 90,22 110,22" fill="url(#goldGrad)"/>
+    <polygon points="70,14 62,28 80,22" fill="url(#goldGrad)"/>
+    <polygon points="130,14 138,28 120,22" fill="url(#goldGrad)"/>
+    <circle cx="85" cy="20" r="2.5" fill="#FFD700"/>
+    <circle cx="100" cy="16" r="3" fill="#FFD700"/>
+    <circle cx="115" cy="20" r="2.5" fill="#FFD700"/>
+  </g>
+  
+  <!-- Shield -->
+  <g>
+    <path d="M 100 35 L 65 60 L 60 105 Q 60 140 100 165 Q 140 140 140 105 L 135 60 Z" 
+          fill="url(#goldGrad)" stroke="#B8956A" stroke-width="2"/>
+    <ellipse cx="95" cy="80" rx="20" ry="28" fill="#F5E6D3" opacity="0.25"/>
+  </g>
+  
+  <!-- Left Wing -->
+  <path d="M 65 75 Q 40 68 25 85 Q 30 95 55 90 Q 65 87 65 75" 
+        fill="url(#goldGrad)" stroke="#B8956A" stroke-width="1.5"/>
+  
+  <!-- Right Wing -->
+  <path d="M 135 75 Q 160 68 175 85 Q 170 95 145 90 Q 135 87 135 75" 
+        fill="url(#goldGrad)" stroke="#B8956A" stroke-width="1.5"/>
+  
+  <!-- S Letter -->
+  <text x="100" y="115" font-size="70" font-weight="900" font-family="Georgia, serif" 
+        fill="url(#goldGrad)" stroke="#B8956A" stroke-width="0.5"
+        text-anchor="middle" dominant-baseline="middle">S</text>
+</svg>

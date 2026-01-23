@@ -1,0 +1,68 @@
+# Environment & Secrets (CRITICAL - Never commit these!)
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# Node modules
+node_modules/
+npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+data/
+database/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+.nyc_output/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.orig
+.sublime-workspace
+
+# OS files
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.log
+
+# OS-specific
+.Windows
+.Linux
+.Mac
+
+# Package manager lock files (optional - include for reproducible builds)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Misc
+.cache/
+.parcel-cache
+dist

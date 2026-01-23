@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Neo Blue & White Minimal Theme */
+:root {
+  --primary: #0066FF;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --dark-gray: #333333;
+  --border: #E0E0E0;
+}
+
+/* Global Styles */
+body { 
+  @apply bg-white text-gray-800 font-sans;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth Transitions */
+* {
+  @apply transition-all duration-300 ease-out;
+}
+
+/* Form inputs styling */
+.input {
+  @apply w-full border border-gray-300 rounded px-4 py-3 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all shadow-sm hover:shadow-md;
+}
+
+.btn-secondary {
+  @apply border-2 border-blue-600 text-blue-600 bg-white px-6 py-3 rounded font-semibold hover:bg-blue-50 transition-all;
+}
+
+/* Clean card style */
+.card {
+  @apply bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-all;
+}
+
+/* Minimal button */
+.btn-minimal {
+  @apply text-gray-700 hover:text-blue-600 transition font-medium;
+}
+
+/* Elegant animations */
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Smooth gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+}
+
+/* Premium shadow */
+.shadow-premium {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover lift effect */
+.hover-lift {
+  @apply hover:-translate-y-1 hover:shadow-xl transition-all duration-300;
+}
+
+/* Heading styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-gray-900;
+}
+
+/* Smooth scroll bar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-600 rounded-full;
+}
+

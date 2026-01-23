@@ -1,0 +1,428 @@
+# Quick Reference - Titanobova SaaS Backend Commands
+
+## 🚀 Development Setup (5 minutes)
+
+```bash
+# Step 1: Navigate to backend
+cd titanobova-django
+
+# Step 2: Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Step 3: Install dependencies
+pip install -r requirements.txt
+
+# Step 4: Create .env file
+cp .env.example .env
+
+# Step 5: Run migrations
+python manage.py migrate
+
+# Step 6: Create admin user
+python manage.py createsuperuser
+
+# Step 7: Start server
+python manage.py runserver
+
+# ✅ Now access:
+# API: http://localhost:8000/api/v1/
+# Admin: http://localhost:8000/admin/
+# Frontend: http://localhost:5173/
+```
+
+---
+
+## 🐳 Docker Setup (Quick Production)
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Run migrations
+docker-compose exec web python manage.py migrate
+
+# Create superuser
+docker-compose exec web python manage.py createsuperuser
+
+# View logs
+docker-compose logs -f web
+
+# Stop all services
+docker-compose down
+
+# View service status
+docker-compose ps
+```
+
+---
+
+## 📦 Common Django Commands
+
+```bash
+# Database migrations
+python manage.py migrate                 # Apply migrations
+python manage.py makemigrations          # Create migrations
+python manage.py showmigrations          # List migrations
+
+# User management
+python manage.py createsuperuser         # Create admin
+python manage.py changepassword username # Change password
+
+# Static files
+python manage.py collectstatic           # Collect for production
+python manage.py collectstatic --clear   # Clear old files
+
+# Testing
+python manage.py test                    # Run all tests
+python manage.py test apps.users         # Run specific app tests
+
+# Shell
+python manage.py shell                   # Interactive Python shell
+python manage.py shell_plus              # Enhanced shell (django-extensions)
+
+# Management commands
+python manage.py init_app                # Initialize with sample data
+
+# Database
+python manage.py dbshell                 # Connect to database
+python manage.py dumpdata > backup.json  # Backup database
+python manage.py loaddata backup.json    # Restore database
+```
+
+---
+
+## 🔐 User Management
+
+```bash
+# Create superuser (admin)
+python manage.py createsuperuser
+
+# Create normal user
+python manage.py shell
+from django.contrib.auth import get_user_model
+User = get_user_model()
+User.objects.create_user(
+    email='user@example.com',
+    username='user',
+    password='SecurePassword123!',
+    user_type='student'
+)
+
+# Change password
+python manage.py changepassword email@example.com
+
+# Delete user
+python manage.py shell
+from django.contrib.auth import get_user_model
+User = get_user_model()
+User.objects.get(email='user@example.com').delete()
+
+# Enable 2FA programmatically
+python manage.py shell
+from apps.users.models import User
+user = User.objects.get(email='user@example.com')
+secret = user.setup_totp()
+user.totp_enabled = True
+user.save()
+print(f"2FA Secret: {secret}")
+```
+
+---
+
+## 💻 API Testing
+
+```bash
+# Test login
+curl -X POST http://localhost:8000/api/v1/auth/token/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin@titanobova.com",
+    "password": "YourPassword"
+  }'
+
+# Test with token
+curl -X GET http://localhost:8000/api/v1/users/profile/ \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+
+# Submit contact form
+curl -X POST http://localhost:8000/api/v1/contacts/contacts/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "subject": "Test",
+    "message": "Hello"
+  }'
+
+# Create payment intent
+curl -X POST http://localhost:8000/api/v1/payments/create_payment_intent/ \
+  -H "Authorization: Bearer <ACCESS_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": "99.99",
+    "description": "Course enrollment"
+  }'
+```
+
+---
+
+## 📊 Database Management
+
+```bash
+# Backup database
+pg_dump -h localhost -U postgres -d titanobova_db > backup.sql
+
+# Restore database
+psql -h localhost -U postgres -d titanobova_db < backup.sql
+
+# Connect to PostgreSQL
+psql -h localhost -U postgres -d titanobova_db
+
+# Useful SQL queries
+SELECT * FROM users_user;                          # List users
+SELECT * FROM contacts_contact;                    # List contacts
+SELECT * FROM payments_payment;                    # List payments
+SELECT * FROM users_auditlog ORDER BY created_at DESC;  # Audit trail
+SELECT * FROM users_loginattempt WHERE success=FALSE;   # Failed logins
+
+# Export data to CSV
+\copy (SELECT * FROM users_user) TO users.csv WITH CSV HEADER;
+```
+
+---
+
+## 🐛 Debugging
+
+```bash
+# Enable debug logging
+export DJANGO_LOG_LEVEL=DEBUG
+python manage.py runserver
+
+# Check migrations status
+python manage.py migrate --plan
+
+# Verify app installation
+python manage.py check --deploy
+
+# View SQL queries
+python manage.py shell
+from django.db import connection
+from django.test.utils import CaptureQueriesContext
+
+with CaptureQueriesContext(connection) as context:
+    # Your code here
+    pass
+print(context.captured_queries)
+
+# Django debug toolbar
+pip install django-debug-toolbar
+# Add to INSTALLED_APPS: 'debug_toolbar'
+# Add to MIDDLEWARE: 'debug_toolbar.middleware.DebugToolbarMiddleware'
+# Add to INTERNAL_IPS = ['127.0.0.1']
+```
+
+---
+
+## 🔧 Environment Variables
+
+### Development (.env)
+```
+DEBUG=True
+SECRET_KEY=development-secret-key
+ALLOWED_HOSTS=localhost,127.0.0.1
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=titanobova_db
+DB_USER=postgres
+DB_PASSWORD=password
+DB_HOST=localhost
+REDIS_HOST=localhost
+```
+
+### Production (.env.production)
+```
+DEBUG=False
+SECRET_KEY=<strong-random-key>
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+DB_HOST=<database-host>
+REDIS_HOST=<redis-host>
+SENDGRID_API_KEY=<api-key>
+STRIPE_SECRET_KEY=<api-key>
+SENTRY_DSN=<dsn>
+```
+
+---
+
+## 📝 Logging & Monitoring
+
+```bash
+# View application logs
+tail -f logs/titanobova.log
+
+# View security logs
+tail -f logs/security.log
+
+# Watch logs in real-time
+tail -f logs/*.log
+
+# Check error count
+grep -c "ERROR" logs/titanobova.log
+
+# View specific user actions
+grep "user@example.com" logs/security.log
+
+# Docker logs
+docker-compose logs -f web        # Django
+docker-compose logs -f celery     # Celery worker
+docker-compose logs -f db         # PostgreSQL
+```
+
+---
+
+## 🚀 Production Deployment
+
+```bash
+# Collect static files
+python manage.py collectstatic --noinput
+
+# Run migrations
+python manage.py migrate
+
+# Start with Gunicorn
+gunicorn --bind 0.0.0.0:8000 \
+         --workers 4 \
+         --threads 2 \
+         --timeout 60 \
+         titanobova_project.wsgi:application
+
+# Or with Supervisor (recommended)
+# Create /etc/supervisor/conf.d/titanobova.conf
+# Then: supervisorctl reread && supervisorctl update
+```
+
+---
+
+## 🔐 Security Tasks
+
+```bash
+# Change SECRET_KEY in production
+python manage.py shell
+import secrets
+print(secrets.token_urlsafe(50))
+
+# Rotate sensitive data
+python manage.py shell
+from apps.users.models import User
+# Force password reset for all users
+User.objects.all().update(last_password_change=None)
+
+# Review failed logins
+python manage.py shell
+from apps.users.models import LoginAttempt
+failed = LoginAttempt.objects.filter(success=False).order_by('-attempted_at')[:50]
+for attempt in failed:
+    print(f"{attempt.user} - {attempt.ip_address} - {attempt.attempted_at}")
+
+# Check locked accounts
+python manage.py shell
+from django.utils import timezone
+from apps.users.models import User
+locked = User.objects.filter(account_locked_until__gt=timezone.now())
+print(f"Locked accounts: {locked.count()}")
+```
+
+---
+
+## 📱 Frontend Integration
+
+```bash
+# Update environment variable
+# In: titanobova-website/app/frontend/.env.local
+VITE_API_URL=http://localhost:8000/api/v1
+VITE_STRIPE_PUBLIC_KEY=pk_test_...
+
+# Update API client
+# In: src/services/api.js
+const API_BASE = import.meta.env.VITE_API_URL;
+
+# Start frontend
+cd titanobova-website/app/frontend
+npm run dev
+```
+
+---
+
+## 🆘 Troubleshooting
+
+```bash
+# Port already in use
+# On Windows: netstat -ano | findstr :8000
+# On Mac/Linux: lsof -i :8000
+# Kill process: kill -9 <PID>
+
+# Database connection error
+python manage.py dbshell  # Test connection
+
+# Static files 404
+python manage.py collectstatic --clear --noinput
+
+# Permission denied (logs directory)
+mkdir -p logs
+chmod 755 logs
+touch logs/titanobova.log
+touch logs/security.log
+chmod 644 logs/*.log
+
+# Reset database (development only!)
+python manage.py migrate zero apps.users  # Reverse migrations
+python manage.py migrate                  # Reapply migrations
+python manage.py createsuperuser          # Create admin
+
+# Clear cache
+python manage.py shell
+from django.core.cache import cache
+cache.clear()
+```
+
+---
+
+## 📚 Useful Resources
+
+- **Django Docs**: https://docs.djangoproject.com/
+- **DRF Docs**: https://www.django-rest-framework.org/
+- **PostgreSQL**: https://www.postgresql.org/docs/
+- **Redis**: https://redis.io/documentation
+- **Stripe API**: https://stripe.com/docs/api
+- **SendGrid**: https://docs.sendgrid.com/
+
+---
+
+## 🎯 Quick Checklist
+
+### Before Production
+- [ ] Change SECRET_KEY
+- [ ] Set DEBUG=False
+- [ ] Configure ALLOWED_HOSTS
+- [ ] Setup PostgreSQL
+- [ ] Setup Redis
+- [ ] Configure email (SendGrid)
+- [ ] Configure Stripe
+- [ ] Setup SSL certificate
+- [ ] Create superuser
+- [ ] Run migrations
+- [ ] Collect static files
+
+### After Deployment
+- [ ] Test all endpoints
+- [ ] Verify authentication
+- [ ] Test 2FA
+- [ ] Test payments
+- [ ] Monitor logs
+- [ ] Check error tracking
+- [ ] Verify email delivery
+- [ ] Test backups
+
+---
+
+**Last Updated**: January 23, 2026  
+**Version**: 1.0.0

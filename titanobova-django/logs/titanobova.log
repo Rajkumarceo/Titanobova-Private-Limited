@@ -533,3 +533,4 @@
 {"asctime": "2026-02-02 23:07:24,218", "name": "django.utils.autoreload", "levelname": "INFO", "message": "Watching for file changes with StatReloader"}
 {"asctime": "2026-02-02 23:12:55,253", "name": "django.utils.autoreload", "levelname": "INFO", "message": "Watching for file changes with StatReloader"}
 {"asctime": "2026-02-02 23:14:30,451", "name": "django.server", "levelname": "INFO", "message": "\"GET /admin/ HTTP/1.1\" 302 0", "request": "<socket.socket fd=1040, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 52187)>", "server_time": "02/Feb/2026 23:14:30", "status_code": 302}
+{"asctime": "2026-02-02 23:14:30,505", "name": "django.server", "levelname": "INFO", "message": "\"GET /admin/login/?next=/admin/ HTTP/1.1\" 200 4376", "request": "<socket.socket fd=1040, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 52187)>", "server_time": "02/Feb/2026 23:14:30", "status_code": 200}

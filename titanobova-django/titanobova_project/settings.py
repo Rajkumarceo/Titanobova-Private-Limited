@@ -261,6 +261,13 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 CORS_ALLOW_ALL_ORIGINS = False
 
+# CORS Regex patterns for tunnels
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https?://.*\.loca\.lt$',  # localtunnel URLs
+    r'^https?://.*\.ngrok\.io$',  # ngrok URLs
+    r'^https?://.*\.ngrok-free\.app$',  # ngrok free URLs
+]
+
 # =================
 # EMAIL SETTINGS
 # =================

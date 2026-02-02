@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { getApiUrl } from '../services/apiConfig'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
@@ -12,7 +13,8 @@ export default function Contact() {
     e.preventDefault()
     setLoading(true)
     try {
-      await axios.post('http://localhost:8000/api/v1/contacts/', form)
+      const apiUrl = getApiUrl()
+      await axios.post(`${apiUrl}/contacts/`, form)
       setStatus({ ok: true, message: 'Message sent successfully! We will get back to you soon.' })
       setForm({ name: '', email: '', phone: '', subject: '', message: '' })
       setTimeout(() => setStatus(null), 5000)

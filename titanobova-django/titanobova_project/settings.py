@@ -258,8 +258,14 @@ CORS_ALLOW_ALL_ORIGINS = False
 # =================
 # EMAIL SETTINGS
 # =================
-EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
-SENDGRID_API_KEY = env('SENDGRID_API_KEY', default=None)
+if DEBUG:
+    # Use console backend for development
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Use SendGrid for production
+    EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+    SENDGRID_API_KEY = env('SENDGRID_API_KEY', default=None)
+
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@titanobova.com')
 SERVER_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@titanobova.com')
 

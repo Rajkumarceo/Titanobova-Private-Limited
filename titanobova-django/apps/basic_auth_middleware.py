@@ -21,7 +21,7 @@ class BasicAuthMiddleware:
         self.auth_username = getattr(settings, 'BASIC_AUTH_USERNAME', 'admin')
         self.auth_password = getattr(settings, 'BASIC_AUTH_PASSWORD', 'titanobova')
         # Paths that don't require auth
-        self.exempt_paths = ['/admin/', '/api/v1/auth/', '/static/', '/media/']
+        self.exempt_paths = ['/admin/', '/api/v1/auth/', '/api/v1/contacts/', '/static/', '/media/']
 
     def __call__(self, request):
         # Skip auth for exempt paths

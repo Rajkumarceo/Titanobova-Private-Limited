@@ -49,7 +49,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
     'style-src': ("'self'", "'unsafe-inline'"),
     'img-src': ("'self'", "data:", "https:"),
     'font-src': ("'self'", "data:"),
-    'connect-src': ("'self'", "http://localhost:5173", "https://*.loca.lt", "https://*.ngrok.io", "http://0.0.0.0:8000"),
+    'connect-src': ("'self'", "http://localhost:5173", "https://titanobova-site.loca.lt", "https://titanobova-api.loca.lt", "https://*.loca.lt", "https://*.ngrok.io"),
 }
 X_FRAME_OPTIONS = 'DENY'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
@@ -246,7 +246,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:5173',
     'http://0.0.0.0:5173',
-    'https://loud-tools-grab.loca.lt',  # Localtunnel URL
+    'https://titanobova-site.loca.lt',  # Main tunnel
+    'https://titanobova-api.loca.lt',   # API tunnel
     'https://*.loca.lt',  # All localtunnel URLs
     'https://*.ngrok.io',  # Ngrok URLs
 ]

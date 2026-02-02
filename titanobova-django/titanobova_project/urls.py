@@ -30,6 +30,11 @@ urlpatterns = [
         'document_root': Path(settings.BASE_DIR) / 'staticfiles' / 'frontend' / 'assets'
     }),
     
+    # Serve frontend static files (favicon, logos, etc)
+    re_path(r'^(favicon\.svg|logo\.svg|Titanobova-private-limited\.png)$', serve, {
+        'document_root': Path(settings.BASE_DIR) / 'staticfiles' / 'frontend'
+    }),
+    
     # Frontend - Root
     path('', IndexView.as_view(), name='index'),
     

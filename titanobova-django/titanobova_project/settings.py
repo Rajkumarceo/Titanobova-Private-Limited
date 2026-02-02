@@ -112,6 +112,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'apps.middleware.RateLimitMiddleware',
     'apps.middleware.SecurityHeadersMiddleware',
+    'apps.basic_auth_middleware.BasicAuthMiddleware',  # Tunnel access protection
 ]
 
 ROOT_URLCONF = 'titanobova_project.urls'
@@ -406,3 +407,9 @@ CELERY_TIMEZONE = TIME_ZONE
 # =================
 if not env('AWS_ACCESS_KEY_ID', default=None):
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# =================
+# BASIC AUTH SETTINGS (for tunnel access protection)
+# =================
+BASIC_AUTH_USERNAME = env('BASIC_AUTH_USERNAME', default='admin')
+BASIC_AUTH_PASSWORD = env('BASIC_AUTH_PASSWORD', default='titanobova')

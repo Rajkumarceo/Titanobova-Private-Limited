@@ -528,3 +528,6 @@
 {"asctime": "2026-02-02 22:58:56,373", "name": "django.utils.autoreload", "levelname": "INFO", "message": "C:\\Users\\Rajkumar\\OneDrive\\Desktop\\Titanobova company website\\titanobova-django\\titanobova_project\\settings.py changed, reloading."}
 {"asctime": "2026-02-02 22:58:57,533", "name": "django.utils.autoreload", "levelname": "INFO", "message": "Watching for file changes with StatReloader"}
 {"asctime": "2026-02-02 22:59:03,736", "name": "django.utils.autoreload", "levelname": "INFO", "message": "C:\\Users\\Rajkumar\\OneDrive\\Desktop\\Titanobova company website\\titanobova-django\\titanobova_project\\settings.py changed, reloading."}
+{"asctime": "2026-02-02 22:59:04,843", "name": "django.utils.autoreload", "levelname": "INFO", "message": "Watching for file changes with StatReloader"}
+{"asctime": "2026-02-02 23:04:20,563", "name": "django.utils.autoreload", "levelname": "INFO", "message": "C:\\Users\\Rajkumar\\OneDrive\\Desktop\\Titanobova company website\\titanobova-django\\titanobova_project\\settings.py changed, reloading."}
+{"asctime": "2026-02-02 23:07:24,218", "name": "django.utils.autoreload", "levelname": "INFO", "message": "Watching for file changes with StatReloader"}

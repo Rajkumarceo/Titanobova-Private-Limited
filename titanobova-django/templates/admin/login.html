@@ -1,0 +1,13 @@
+{% extends "admin/login.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/admin_custom.css">
+<div class="admin-custom-login">
+  <div class="site-branding">
+    <a href="/">
+      <h1>Titanobova</h1>
+    </a>
+  </div>
+  {{ block.super }}
+</div>
+{% endblock %}

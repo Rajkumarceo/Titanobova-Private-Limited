@@ -12,7 +12,7 @@ export default function Contact() {
     e.preventDefault()
     setLoading(true)
     try {
-      await axios.post('http://localhost:4000/api/contacts', form)
+      await axios.post('http://localhost:8000/api/v1/contacts/', form)
       setStatus({ ok: true, message: 'Message sent successfully! We will get back to you soon.' })
       setForm({ name: '', email: '', phone: '', subject: '', message: '' })
       setTimeout(() => setStatus(null), 5000)

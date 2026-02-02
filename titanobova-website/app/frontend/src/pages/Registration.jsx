@@ -17,7 +17,7 @@ export default function Registration() {
     }
     setLoading(true)
     try {
-      await axios.post('http://localhost:4000/api/registrations', {
+      await axios.post('http://localhost:8000/api/v1/enrollments/', {
         name: form.name,
         email: form.email,
         phone: form.phone,

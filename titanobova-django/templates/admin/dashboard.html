@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanobova Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--dark);
+            padding: 2rem 0;
+            color: white;
+            position: fixed;
+            width: 260px;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .sidebar-brand i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #d1d5db;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            color: white;
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding-left: calc(1.5rem - 4px);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 260px;
+            background: var(--light);
+            flex: 1;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+            width: 300px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-icon.primary { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        .card-icon.secondary { background: rgba(236, 72, 153, 0.1); color: var(--secondary); }
+        .card-icon.success { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .card-icon.warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin: 0.5rem 0;
+        }
+
+        .card-change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .card-change.positive { color: var(--success); }
+        .card-change.negative { color: var(--danger); }
+
+        /* Tables */
+        .table-wrapper {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background: var(--light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr:hover {
+            background: var(--light);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.success { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .badge.warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .badge.danger { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .badge.primary { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .action-link:hover {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <i class="fas fa-rocket"></i>
+                    <span>TITANOBOVA</span>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="/admin/contacts/contact/"><i class="fas fa-envelope"></i> Contacts</a></li>
+                <li><a href="/admin/courses/course/"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="/admin/courses/enrollment/"><i class="fas fa-users"></i> Enrollments</a></li>
+                <li><a href="/admin/payments/payment/"><i class="fas fa-credit-card"></i> Payments</a></li>
+                <li><a href="/admin/users/user/"><i class="fas fa-user-circle"></i> Users</a></li>
+                <li><a href="/admin/auth/group/"><i class="fas fa-user-shield"></i> Groups</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="/" class="footer-link" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Visit Website</span>
+                </a>
+                <a href="/admin/logout/" class="footer-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navbar -->
+            <nav class="navbar">
+                <div class="navbar-left">
+                    <h2 style="color: var(--dark); font-size: 1.3rem;">Admin Dashboard</h2>
+                </div>
+                <div class="navbar-right">
+                    <div class="user-profile">
+                        <div class="avatar">{{ user.username|first|upper }}</div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--dark);">{{ user.get_full_name|default:user.username }}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-light);">Administrator</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="page-header">
+                    <h1>Welcome back, {{ user.first_name|default:user.username }}!</h1>
+                    <p>Here's your business overview for today</p>
+                </div>
+
+                <div class="quick-actions">
+                    <a href="/admin/contacts/contact/add/" class="action-link">
+                        <i class="fas fa-plus-circle"></i> New Contact
+                    </a>
+                    <a href="/admin/courses/course/add/" class="action-link">
+                        <i class="fas fa-plus-circle"></i> New Course
+                    </a>
+                    <a href="/admin/users/user/add/" class="action-link">
+                        <i class="fas fa-plus-circle"></i> New User
+                    </a>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Total Users</div>
+                                <div class="card-value" id="total-users">0</div>
+                            </div>
+                            <div class="card-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i> Active users
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Total Contacts</div>
+                                <div class="card-value" id="total-contacts">0</div>
+                            </div>
+                            <div class="card-icon secondary">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i> New messages
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Total Revenue</div>
+                                <div class="card-value" id="total-revenue">$0</div>
+                            </div>
+                            <div class="card-icon success">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i> Payments received
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Pending Contacts</div>
+                                <div class="card-value" id="pending-contacts">0</div>
+                            </div>
+                            <div class="card-icon warning">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                        </div>
+                        <div class="card-change positive">
+                            <i class="fas fa-clock"></i> Awaiting response
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access -->
+                <div class="table-wrapper">
+                    <div class="table-header">
+                        <h3>Quick Access</h3>
+                        <a href="/admin/" class="btn btn-secondary">
+                            <i class="fas fa-external-link-alt"></i> View Full Admin
+                        </a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Section</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Contacts</strong></td>
+                                <td>Manage customer inquiries and messages</td>
+                                <td><a href="/admin/contacts/contact/" class="action-link" style="margin: 0;">View All</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Courses</strong></td>
+                                <td>Manage course content and materials</td>
+                                <td><a href="/admin/courses/course/" class="action-link" style="margin: 0;">View All</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enrollments</strong></td>
+                                <td>Track student course registrations</td>
+                                <td><a href="/admin/courses/enrollment/" class="action-link" style="margin: 0;">View All</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payments</strong></td>
+                                <td>Monitor financial transactions</td>
+                                <td><a href="/admin/payments/payment/" class="action-link" style="margin: 0;">View All</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Users</strong></td>
+                                <td>Manage system users and permissions</td>
+                                <td><a href="/admin/users/user/" class="action-link" style="margin: 0;">View All</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Fetch dashboard data
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/v1/admin/dashboard/', {
+                    headers: {
+                        'Authorization': 'Bearer ' + getCookie('access_token')
+                    }
+                });
+                const data = await response.json();
+                
+                document.getElementById('total-users').textContent = data.total_users || 0;
+                document.getElementById('total-contacts').textContent = data.total_contacts || 0;
+                document.getElementById('total-revenue').textContent = '$' + (data.total_revenue || 0).toFixed(2);
+                document.getElementById('pending-contacts').textContent = data.pending_contacts || 0;
+            } catch (error) {
+                console.log('Dashboard data loaded (static mode)');
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+</html>

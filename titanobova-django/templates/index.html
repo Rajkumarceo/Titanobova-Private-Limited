@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Titanobova Pvt Limited - Professional Business Solutions">
+    <title>Titanobova Pvt Limited - Home</title>
+    <meta property="og:title" content="Titanobova Pvt Limited" />
+    <meta property="og:description" content="Professional Business Solutions — Consulting, Technical Support, Corporate and Digital Services." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TITANOBOVA" />
+    <link rel="stylesheet" href="css/professional.css">
+        <style>
+            /* Prevent flash of unstyled content until page fully loads */
+            html { opacity: 0; transition: opacity .12s ease-in; }
+            @media (prefers-reduced-motion: reduce) { html { transition: none; } }
+        </style>
+        <script src="/js/fouc.js" defer></script>
+    <link rel="icon" href="assets/titanobova%20heading%20logo.png" type="image/png">
+</head>
+<body>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="sr-only">Titanobova Private Limited</span>
+                <strong>TITANOBOVA</strong>
+            </div>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li><a href="pages/services.html">Services</a></li>
+                <li><a href="pages/registration.html">Courses</a></li>
+                <li><a href="pages/founder-login.html">Company Login</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Transform Your Business Today</h2>
+            <p>Strategic consulting, technical excellence, and digital innovation to drive sustainable growth for your organization.</p>
+            <a href="pages/contact.html" class="cta-button">Start Your Journey</a>
+            <a href="pages/services.html" class="cta-button secondary">Explore Solutions</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="services-overview">
+        <h2>What We Do</h2>
+        <p>Comprehensive solutions designed to empower your business at every stage of growth.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Business Consulting</h3>
+                <p>Strategic roadmaps, market analysis, and operational optimization to accelerate your growth trajectory.</p>
+            </div>
+            <div class="service-card">
+                <h3>Technical Support</h3>
+                <p>Enterprise infrastructure, cloud solutions, and 24/7 technical support for uninterrupted operations.</p>
+            </div>
+            <div class="service-card">
+                <h3>Corporate Services</h3>
+                <p>Compliance management, corporate governance, and strategic advisory services for enterprises.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Solutions</h3>
+                <p>Custom web, mobile, and cloud platforms engineered for performance and scale.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive: Services with short bullets -->
+    <section class="content-section">
+        <h2>Services & Deliverables</h2>
+        <p>End-to-end expertise across strategy, implementation, and ongoing optimization.</p>
+        <div class="values-grid">
+            <div class="value-item">
+                <h4>Strategy & Planning</h4>
+                <p>Data-driven roadmaps, OKR frameworks, and strategic alignment with clear KPIs.</p>
+            </div>
+            <div class="value-item">
+                <h4>Implementation</h4>
+                <p>Agile delivery with rigorous QA, architecture review, and seamless deployment.</p>
+            </div>
+            <div class="value-item">
+                <h4>Support & Maintenance</h4>
+                <p>SLA-backed support, proactive monitoring, and incident management 24/7.</p>
+            </div>
+            <div class="value-item">
+                <h4>Training & Handover</h4>
+                <p>Comprehensive training, documentation, and change management for your teams.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="why-choose">
+        <div>
+            <h2>Why Partner With Us</h2>
+            <p>Proven track record of delivering measurable results for diverse industries.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature testimonial">
+                <p class="quote">"Titanobova's strategic approach reduced our operational costs by 35% within six months."</p>
+                <p class="by">Anjali K., Chief Operations Officer</p>
+            </div>
+            <div class="feature testimonial">
+                <p class="quote">"Professional execution, clear communication, and technical excellence throughout the engagement."</p>
+                <p class="by">Marco R., CTO</p>
+            </div>
+            <div class="feature testimonial">
+                <p class="quote">"The team understood our business challenges and delivered actionable solutions quickly."</p>
+                <p class="by">S. Lee, Founder & CEO</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-form-wrapper">
+                <h2>Let's Talk</h2>
+                <p>Share your challenges and goals. Our team will respond within 24 hours with tailored recommendations.</p>
+                <form id="homeContactForm" action="/api/contacts" method="post" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input id="name" name="name" type="text" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" name="email" type="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Project Subject</label>
+                        <input id="subject" name="subject" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Inquiry</button>
+                </form>
+            </div>
+            <div class="contact-info-wrapper">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <h4>Email</h4>
+                    <p><a href="mailto:titanobovapvt@gmail.com">hello@titanobova.com</a></p>
+                </div>
+                <div class="info-item">
+                    <h4>Phone</h4>
+                    <p><a href="tel:+918270691757">+91 8270691757</a></p>
+                </div>
+                <div class="info-item">
+                    <h4>Office</h4>
+                    <p>India • Remote & Onsite Engagements Available</p>
+                </div>
+                <div class="info-item">
+                    <h4>Response Time</h4>
+                    <p>Business inquiries answered within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Titanobova Pvt Limited</h4>
+                <p>Professional Business Solutions Provider</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pages/about.html">About</a></li>
+                    <li><a href="pages/services.html">Services</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p>Email: titanobovapvt@gmail.com</p>
+                <p>Phone: +91 8270691757</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span class="current-year"></span> Titanobova Pvt Limited. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button id="scrollToTop" aria-label="Scroll to top" title="Back to top">↑</button>
+    <script>
+        // Home contact form handler
+        (function(){
+            try {
+                const contactForm = document.getElementById('homeContactForm');
+                if (!contactForm) return;
+                contactForm.addEventListener('submit', function(e){
+                    e.preventDefault();
+                    const name = document.getElementById('name').value || '';
+                    const email = document.getElementById('email').value || '';
+                    const subject = document.getElementById('subject').value || '';
+                    const message = document.getElementById('message').value || '';
+                    const payload = { name, email, subject, message };
+                    const backendOrigin = 'http://localhost:4000';
+                    const endpoint = (window.location.origin === backendOrigin) ? '/api/contacts' : `${backendOrigin}/api/contacts`;
+                    fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }).then(async res => {
+                        if (!res.ok) {
+                            const txt = await res.text().catch(()=>null);
+                            console.error('Submit failed', res.status, txt);
+                            alert('Submission failed: ' + (txt || res.statusText || res.status));
+                            return;
+                        }
+                        alert('Thank you — your message was submitted.');
+                        contactForm.reset();
+                    }).catch(err => {
+                        console.error('Network error during submit', err);
+                        alert('Network error. Ensure backend is running at http://localhost:4000');
+                    });
+                });
+            } catch (e) { console.warn('Home contact form error', e); }
+        })();
+    </script>
+    <script src="js/script.js" defer></script>
+</body>
+</html>

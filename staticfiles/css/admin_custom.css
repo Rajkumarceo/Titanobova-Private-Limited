@@ -1,0 +1,6 @@
+body { background: #111; color: #eee; }
+.admin-custom-login { max-width: 680px; margin: 40px auto; padding: 20px; }
+.admin-custom-login .site-branding h1 { color: #6f98a8; font-family: 'Helvetica', Arial, sans-serif; margin: 0 0 20px; }
+#content-main { background: rgba(0,0,0,0.6); padding: 18px; border-radius: 6px; }
+.input, input[type="text"], input[type="password"] { background: #0f1720; color: #fff; border: 1px solid #444; }
+button[type='submit'] { background: #4a6b7a; color: #fff; border-radius: 4px; }

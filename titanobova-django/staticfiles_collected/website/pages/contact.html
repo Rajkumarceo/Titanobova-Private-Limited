@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact - Titanobova Pvt Limited">
+    <title>Contact Us - Titanobova Pvt Limited</title>
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="icon" href="../assets/titanobova%20heading%20logo.png" type="image/png">
+        <style>
+            html { opacity: 0; transition: opacity .12s ease-in; }
+            @media (prefers-reduced-motion: reduce) { html { transition: none; } }
+        </style>
+        <script src="/js/fouc.js" defer></script>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <strong>Titanobova</strong>
+                <span class="sr-only">Titanobova Private Limited</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main">
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Contact Us</h1>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper">
+                <h2>Send us a Message</h2>
+                <form class="contact-form" id="contactForm" action="/api/contacts" method="post">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+                                            <noscript>
+                                                <p style="color:#b91c1c;margin-top:12px">JavaScript is required for a smooth submission. If you prefer not to use JavaScript, open this page from the backend origin: <a href="http://localhost:4000/pages/contact.html">http://localhost:4000/pages/contact.html</a></p>
+                                            </noscript>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info-wrapper">
+                <h2>Contact Information</h2>
+                
+                <div class="info-item">
+                    <h4>Address</h4>
+                    <p>Titanobova Pvt Limited<br>
+                    Business District<br>
+                    City, Country 12345</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Email</h4>
+                    <p><a href="mailto:info@titanobova.com">info@titanobova.com</a><br>
+                    <a href="mailto:titanobovapvt@gmail.com">titanobovapvt@gmail.com</a></p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Phone</h4>
+                    <p><a href="tel:+918270691757">+918270691757</a><br>
+                    <a href="tel:+918508703636">+918508703636</a></p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Business Hours</h4>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
+                    Saturday: 10:00 AM - 4:00 PM<br>
+                    Sunday: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Titanobova Pvt Limited</h4>
+                <p>Professional Business Solutions Provider</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="founder-login.html">Company Login</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p>Email: info@titanobova.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span class="current-year"></span> Titanobova Pvt Limited. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button id="scrollToTop" aria-label="Scroll to top" title="Back to top">↑</button>
+        <script>
+            // Defensive inline submit handler — runs even if external JS fails to load
+            (function(){
+                try {
+                    const contactForm = document.getElementById('contactForm');
+                    if (!contactForm) return;
+                    contactForm.addEventListener('submit', function(e){
+                        e.preventDefault();
+                        // Collect fields
+                        const name = document.getElementById('name').value || '';
+                        const email = document.getElementById('email').value || '';
+                        const phone = document.getElementById('phone').value || '';
+                        const subject = document.getElementById('subject').value || '';
+                        const message = document.getElementById('message').value || '';
+                        const payload = { name, email, phone, subject, message };
+                        const backendOrigin = 'http://localhost:4000';
+                        const endpoint = (window.location.origin === backendOrigin) ? '/api/contacts' : `${backendOrigin}/api/contacts`;
+                        fetch(endpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        }).then(async res => {
+                            if (!res.ok) {
+                                const txt = await res.text().catch(()=>null);
+                                console.error('Submit failed', res.status, txt);
+                                alert('Submission failed: ' + (txt || res.statusText || res.status));
+                                return;
+                            }
+                            alert('Thank you — your message was submitted.');
+                            contactForm.reset();
+                        }).catch(err => {
+                            console.error('Network error during submit', err);
+                            alert('Network error. Ensure backend is running at http://localhost:4000');
+                        });
+                    });
+                } catch (e) { console.warn('Inline contact handler error', e); }
+            })();
+        </script>
+        <script src="../js/script.js" defer></script>
+</body>
+</html>

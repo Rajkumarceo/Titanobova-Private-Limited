@@ -25,10 +25,10 @@ export default function AdminDashboard() {
     setError(null)
     try {
       const [contactsRes, enrollmentsRes] = await Promise.all([
-        axios.get('http://localhost:4000/api/admin/contacts', {
+        axios.get('http://localhost:8000/api/v1/contacts/', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:4000/api/admin/enrollments', {
+        axios.get('http://localhost:8000/api/v1/enrollments/', {
           headers: { Authorization: `Bearer ${token}` }
         })
       ])

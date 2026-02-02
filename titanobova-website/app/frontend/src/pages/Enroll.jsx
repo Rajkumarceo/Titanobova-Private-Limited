@@ -60,7 +60,7 @@ export default function Enroll() {
         enrollmentDate: new Date().toISOString(),
       }
 
-      const response = await axios.post('http://localhost:4000/api/enrollments', enrollmentData)
+      const response = await axios.post('http://localhost:8000/api/v1/courses/enrollments/', enrollmentData)
       
       if (response.status === 201 || response.status === 200) {
         setSuccess(true)

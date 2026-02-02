@@ -94,7 +94,7 @@ export default function Payment() {
         try {
           const token = localStorage.getItem('authToken')
           await axios.post(
-            `http://localhost:4000/api/admin/registrations/${enrollmentId}/mark-paid`,
+            `http://localhost:8000/api/v1/payments/`,
             {},
             { headers: { Authorization: `Bearer ${token}` } }
           )

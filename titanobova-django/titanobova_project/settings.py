@@ -8,8 +8,14 @@ import sys
 from pathlib import Path
 from datetime import timedelta
 import environ
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+
+# Optional Sentry integration
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+    SENTRY_AVAILABLE = True
+except ImportError:
+    SENTRY_AVAILABLE = False
 
 # Load environment variables
 env = environ.Env(
@@ -18,21 +24,21 @@ env = environ.Env(
     CACHE_TIMEOUT=(int, 3600),
 )
 
-environ.Env.read_env()
+environ.Env.read_env(os.path.join(str(Path(__file__).resolve().parent.parent), '.env'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =================
 # SECURITY SETTINGS
 # =================
+DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY', default='CHANGE-THIS-IN-PRODUCTION-NOW')
-if SECRET_KEY == 'CHANGE-THIS-IN-PRODUCTION-NOW' and not env('DEBUG'):
+if SECRET_KEY == 'CHANGE-THIS-IN-PRODUCTION-NOW' and not DEBUG:
     raise ValueError('SECRET_KEY must be changed in production!')
 
-DEBUG = env('DEBUG')
-ALLOWED_HOSTS = [h.strip() for h in env('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')]
+ALLOWED_HOSTS = [h.strip() for h in env('ALLOWED_HOSTS', default='localhost,127.0.0.1,0.0.0.0,testserver').split(',')]
 
-# HTTPS & Security Headers
+# HTTPS & Security Headers (Enhanced)
 SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
@@ -43,12 +49,14 @@ SECURE_CONTENT_SECURITY_POLICY = {
     'style-src': ("'self'", "'unsafe-inline'"),
     'img-src': ("'self'", "data:", "https:"),
     'font-src': ("'self'", "data:"),
-    'connect-src': ("'self'",),
+    'connect-src': ("'self'", "http://localhost:5173"),
 }
 X_FRAME_OPTIONS = 'DENY'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_HOST = None if DEBUG else 'titanobova.com'
 
 # CSRF & Session Protection
 CSRF_COOKIE_HTTPONLY = True
@@ -59,9 +67,8 @@ SESSION_COOKIE_SAMESITE = 'Strict'
 SESSION_COOKIE_AGE = 3600  # 1 hour
 CSRF_COOKIE_AGE = 31449600  # 1 year
 
-# Password Hashing
+# Password Hashing (PBKDF2 first - no external dependencies needed)
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
@@ -76,20 +83,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
     
     # Third-party apps
     'rest_framework',
-    'corsheaders',
-    'django_filters',
-    'guardian',
     'rest_framework_simplejwt',
+    'corsheaders',
+    'guardian',
     
-    # Project apps
+    # Titanobova apps
     'apps.users',
     'apps.contacts',
     'apps.courses',
     'apps.payments',
     'apps.admin_panel',
+    'apps.frontend',
 ]
 
 MIDDLEWARE = [
@@ -127,39 +135,59 @@ TEMPLATES = [
 # =================
 # DATABASE SETTINGS
 # =================
-DATABASES = {
-    'default': {
-        'ENGINE': env('DB_ENGINE', default='django.db.backends.postgresql'),
-        'NAME': env('DB_NAME', default='titanobova_db'),
-        'USER': env('DB_USER', default='postgres'),
-        'PASSWORD': env('DB_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='5432'),
-        'CONN_MAX_AGE': 600,
-        'OPTIONS': {
-            'sslmode': 'require' if not DEBUG else 'disable',
+if DEBUG:
+    # SQLite for development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-}
+else:
+    # PostgreSQL for production
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE', default='django.db.backends.postgresql'),
+            'NAME': env('DB_NAME', default='titanobova_db'),
+            'USER': env('DB_USER', default='postgres'),
+            'PASSWORD': env('DB_PASSWORD', default=''),
+            'HOST': env('DB_HOST', default='localhost'),
+            'PORT': env('DB_PORT', default='5432'),
+            'CONN_MAX_AGE': 600,
+            'OPTIONS': {
+                'sslmode': 'require',
+            }
+        }
+    }
 
 # =================
-# CACHE SETTINGS (Redis)
+# CACHE SETTINGS
 # =================
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f"redis://{env('REDIS_HOST', default='localhost')}:{env('REDIS_PORT', default=6379)}/1",
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'PASSWORD': env('REDIS_PASSWORD', default=None),
-            'SOCKET_CONNECT_TIMEOUT': 5,
-            'SOCKET_TIMEOUT': 5,
-            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
-            'IGNORE_EXCEPTIONS': True,
-        },
-        'TIMEOUT': env('CACHE_TIMEOUT', default=3600),
+if DEBUG:
+    # Simple in-memory cache for development
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
     }
-}
+else:
+    # Redis for production
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': f"redis://{env('REDIS_HOST', default='localhost')}:{env('REDIS_PORT', default=6379)}/1",
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'PASSWORD': env('REDIS_PASSWORD', default=None),
+                'SOCKET_CONNECT_TIMEOUT': 5,
+                'SOCKET_TIMEOUT': 5,
+                'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+                'IGNORE_EXCEPTIONS': True,
+            },
+            'TIMEOUT': env('CACHE_TIMEOUT', default=3600),
+        }
+    }
 
 # =================
 # REST FRAMEWORK SETTINGS
@@ -169,7 +197,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -189,6 +217,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
+    'FORMAT_SUFFIX_PATTERNS': False,
 }
 
 # =================
@@ -322,7 +351,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # =================
 # SENTRY ERROR TRACKING
 # =================
-if env('SENTRY_DSN', default=None):
+if SENTRY_AVAILABLE and env('SENTRY_DSN', default=None):
     sentry_sdk.init(
         dsn=env('SENTRY_DSN'),
         integrations=[DjangoIntegration()],
@@ -368,4 +397,5 @@ CELERY_TIMEZONE = TIME_ZONE
 # =================
 # WHITENOISE SETTINGS (for static files in production)
 # =================
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if not env('AWS_ACCESS_KEY_ID', default=None):
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

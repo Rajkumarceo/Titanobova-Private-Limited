@@ -15,9 +15,9 @@ export default function Login() {
     setLoading(true)
     setError(null)
     try {
-      const res = await axios.post('http://localhost:4000/api/auth/login', form)
+      const res = await axios.post('http://localhost:8000/api/v1/auth/token/', form)
       // Store token under unified key used by Founder login and dashboard
-      localStorage.setItem('authToken', res.data.token)
+      localStorage.setItem('authToken', res.data.access)
       navigate('/admin')
     } catch (err) {
       setError(err?.response?.data?.message || 'Invalid credentials. Please try again.')

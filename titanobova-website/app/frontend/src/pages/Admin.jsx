@@ -16,7 +16,7 @@ export default function Admin() {
       return
     }
 
-    axios.get('http://localhost:4000/api/admin/contacts', {
+    axios.get('http://localhost:8000/api/v1/contacts/', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {

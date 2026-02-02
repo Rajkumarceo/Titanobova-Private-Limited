@@ -15,16 +15,16 @@ export default function FounderLogin() {
     setError(null)
 
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', {
+      const response = await axios.post('http://localhost:8000/api/v1/auth/token/', {
         username,
         password
       })
 
       // Store token
-      localStorage.setItem('authToken', response.data.token)
+      localStorage.setItem('authToken', response.data.access)
       
-      // Redirect to admin dashboard
-      navigate('/admin-dashboard')
+      // Redirect to Django admin panel
+      window.location.href = 'http://localhost:8000/admin/'
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.')
     } finally {

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Registrations</title>
+  <link rel="stylesheet" href="../css/professional.css">
+  <link rel="icon" href="../assets/titanobova%20heading%20logo.png" type="image/png">
+  <style>
+    html { opacity: 0; transition: opacity .12s ease-in; }
+    @media (prefers-reduced-motion: reduce) { html { transition: none; } }
+  </style>
+  <script src="/js/fouc.js" defer></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><div class="logo"><strong>TITANOBOVA</strong></div></div></nav>
+  <main style="max-width:1000px;margin:32px auto;padding:16px;">
+    <h1>Registrations</h1>
+    <p id="status" style="color:#666">Loading...</p>
+    <table id="regs" style="width:100%;border-collapse:collapse;display:none">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">ID</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Name</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Email</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Course</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Price</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Date</th>
+          <th style="text-align:left;padding:8px;border-bottom:1px solid #eee">Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+  <script>
+    (function(){
+      const status = document.getElementById('status');
+      const table = document.getElementById('regs');
+      const tbody = table.querySelector('tbody');
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        status.textContent = 'No admin token found. Please login via the Company Login and try again.';
+        return;
+      }
+      fetch('/api/admin/registrations', { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(r => r.json().then(b => ({status:r.status, body:b})))
+        .then(resp => {
+          if (resp.status !== 200) {
+            status.textContent = 'Failed to load registrations: ' + (resp.body && resp.body.message || resp.status);
+            return;
+          }
+          const rows = resp.body.registrations || [];
+          if (!rows.length) {
+            status.textContent = 'No registrations found.';
+            return;
+          }
+          status.style.display = 'none';
+          table.style.display = '';
+          rows.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td style="padding:8px;border-bottom:1px solid #f3f3f3">${r.id}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3">${r.name}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3">${r.email}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3">${r.course} ${r.level?'- '+r.level:''}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3">₹${r.price}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3">${r.created_at}</td>
+                            <td style="padding:8px;border-bottom:1px solid #f3f3f3"><button data-id="${r.id}" class="markPaid">Mark Paid</button></td>`;
+            tbody.appendChild(tr);
+          });
+
+          document.querySelectorAll('.markPaid').forEach(btn => {
+            btn.addEventListener('click', (e)=>{
+              const id = e.target.getAttribute('data-id');
+              if (!confirm('Mark registration #' + id + ' as paid?')) return;
+              fetch('/api/admin/registrations/'+id+'/mark-paid', { method:'POST', headers: { 'Authorization':'Bearer '+token } })
+                .then(r => r.json()).then(j=>{
+                  if (j && (j.changed || j.changedRows || j.changed === 0)) {
+                    alert('Marked paid. Refreshing.'); location.reload();
+                  } else {
+                    alert('Failed to mark paid.');
+                  }
+                }).catch(()=>alert('Network error'));
+            });
+          });
+        }).catch(err=>{ status.textContent = 'Network error: '+err.message; });
+    })();
+  </script>
+</body>
+</html>

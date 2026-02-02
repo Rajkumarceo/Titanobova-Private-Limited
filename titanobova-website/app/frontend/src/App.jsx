@@ -47,6 +47,9 @@ export default function App() {
             <Link to="/contact" className={`text-sm font-semibold transition ${isActive('/contact') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
               Contact
             </Link>
+            <a href="http://localhost:8000/admin/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-purple-600 border-2 border-purple-600 px-4 py-2 rounded hover:bg-purple-50 transition">
+              <span>👨‍💼 Admin</span>
+            </a>
             <Link to="/login" className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded transition">
               Login
             </Link>
@@ -74,6 +77,7 @@ export default function App() {
             <Link to="/about" className="block text-sm font-semibold text-gray-900 hover:text-blue-600 py-2 transition">About</Link>
             <Link to="/services" className="block text-sm font-semibold text-gray-900 hover:text-blue-600 py-2 transition">Services</Link>
             <Link to="/contact" className="block text-sm font-semibold text-gray-900 hover:text-blue-600 py-2 transition">Contact</Link>
+            <a href="http://localhost:8000/admin/" target="_blank" rel="noopener noreferrer" className="block text-sm font-semibold text-purple-600 border-2 border-purple-600 px-4 py-2 rounded text-center hover:bg-purple-50 transition mt-2">👨‍💼 Admin</a>
             <Link to="/login" className="block text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-center transition mt-2">Login</Link>
             <Link to="/register" className="block text-sm font-semibold text-blue-600 border-2 border-blue-600 px-4 py-2 rounded text-center hover:bg-blue-50 transition mt-2">Register</Link>
           </nav>

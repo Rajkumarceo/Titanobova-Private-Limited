@@ -49,7 +49,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
     'style-src': ("'self'", "'unsafe-inline'"),
     'img-src': ("'self'", "data:", "https:"),
     'font-src': ("'self'", "data:"),
-    'connect-src': ("'self'", "http://localhost:5173"),
+    'connect-src': ("'self'", "http://localhost:5173", "https://*.loca.lt", "https://*.ngrok.io", "http://0.0.0.0:8000"),
 }
 X_FRAME_OPTIONS = 'DENY'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
@@ -241,10 +241,17 @@ SIMPLE_JWT = {
 # CORS SETTINGS
 # =================
 CORS_ALLOWED_ORIGINS = [
-    origin.strip() for origin in env('CORS_ALLOWED_ORIGINS', default='http://localhost:5173').split(',')
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://0.0.0.0:5173',
+    'https://loud-tools-grab.loca.lt',  # Localtunnel URL
+    'https://*.loca.lt',  # All localtunnel URLs
+    'https://*.ngrok.io',  # Ngrok URLs
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+CORS_ALLOW_ALL_ORIGINS = False
 
 # =================
 # EMAIL SETTINGS

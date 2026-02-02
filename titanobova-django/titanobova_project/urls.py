@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include, re_path
+from django.views.static import serve
+from pathlib import Path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from apps.frontend.views import IndexView, PageView
 
@@ -23,11 +25,16 @@ urlpatterns = [
     path('api/v1/payments/', include('apps.payments.urls')),
     path('api/v1/admin/', include('apps.admin_panel.urls')),
     
+    # Serve React app assets directly
+    re_path(r'^assets/(?P<path>.*)$', serve, {
+        'document_root': Path(settings.BASE_DIR) / 'staticfiles' / 'frontend' / 'assets'
+    }),
+    
     # Frontend - Root
     path('', IndexView.as_view(), name='index'),
     
-    # Catch-all for React Router (must be last)
-    re_path(r'^.*$', IndexView.as_view(), name='react_fallback'),
+    # Catch-all for React Router (must be last, but exclude static/media/api/admin)
+    re_path(r'^(?!static/)(?!media/)(?!admin/)(?!api/).+$', IndexView.as_view(), name='react_fallback'),
 ]
 
 if settings.DEBUG:

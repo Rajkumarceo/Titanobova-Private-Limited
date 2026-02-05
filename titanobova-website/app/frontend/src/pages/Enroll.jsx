@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { getApiUrl } from '../services/apiConfig'
 
 export default function Enroll() {
   const location = useLocation()
@@ -52,15 +53,19 @@ export default function Enroll() {
 
     try {
       const enrollmentData = {
-        ...formData,
-        courseTitle: course.title,
-        coursePrice: course.price,
-        courseDuration: course.duration,
-        courseLevel: course.level,
-        enrollmentDate: new Date().toISOString(),
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        experience: formData.experience,
+        course_title: course.title,
+        course_price: course.price,
+        course_duration: course.duration,
+        course_level: (course.level || 'beginner').toLowerCase(),
       }
 
-      const response = await axios.post('http://localhost:8000/api/v1/courses/enrollments/', enrollmentData)
+      const apiUrl = getApiUrl()
+      const response = await axios.post(`${apiUrl}/courses/enrollment-requests/`, enrollmentData)
       
       if (response.status === 201 || response.status === 200) {
         setSuccess(true)
@@ -84,7 +89,7 @@ export default function Enroll() {
         }, 2000)
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Enrollment failed. Please try again.')
+      setError(err.response?.data?.detail || err.response?.data?.message || 'Enrollment failed. Please try again.')
       console.error('Enrollment error:', err)
     } finally {
       setLoading(false)

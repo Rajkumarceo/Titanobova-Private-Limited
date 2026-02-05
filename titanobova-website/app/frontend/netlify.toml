@@ -1,0 +1,14 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[context.production.environment]
+  # Set VITE_API_URL in Netlify site settings to your backend URL (e.g. https://your-backend.onrender.com/api/v1)
+  # VITE_BACKEND_URL can be used if the frontend needs to link directly to backend (optional)
+  VITE_API_URL = ""
+  VITE_BACKEND_URL = ""
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { getApiUrl } from '../services/apiConfig'
 
 export default function Payment() {
   const location = useLocation()
@@ -29,7 +30,7 @@ export default function Payment() {
   }, [enrollment, navigate])
 
   const currentEnrollment = enrollment || JSON.parse(localStorage.getItem('currentEnrollment') || '{}')
-  const courseAmount = amount || currentEnrollment.coursePrice
+  const courseAmount = amount || currentEnrollment.course_price || currentEnrollment.coursePrice
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -81,8 +82,8 @@ export default function Payment() {
       const paymentData = {
         enrollmentId,
         amount: courseAmount,
-        courseName: currentEnrollment.courseTitle,
-        studentName: currentEnrollment.name,
+        courseName: currentEnrollment.course_title || currentEnrollment.courseTitle,
+        studentName: (currentEnrollment.first_name && currentEnrollment.last_name) ? `${currentEnrollment.first_name} ${currentEnrollment.last_name}` : (currentEnrollment.name || 'Student'),
         studentEmail: currentEnrollment.email || formData.billingEmail,
         cardLast4: formData.cardNumber.slice(-4),
         paymentDate: new Date().toISOString(),
@@ -94,7 +95,7 @@ export default function Payment() {
         try {
           const token = localStorage.getItem('authToken')
           await axios.post(
-            `http://localhost:8000/api/v1/payments/`,
+            `${getApiUrl()}/payments/`,
             {},
             { headers: { Authorization: `Bearer ${token}` } }
           )

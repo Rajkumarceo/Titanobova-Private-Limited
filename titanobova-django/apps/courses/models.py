@@ -107,3 +107,53 @@ class Enrollment(models.Model):
     
     def __str__(self):
         return f"{self.user.email} - {self.course.title}"
+
+class EnrollmentRequest(models.Model):
+    """
+    Enrollment request from unauthenticated users
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
+    # User info
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    experience = models.CharField(
+        max_length=20,
+        choices=[
+            ('beginner', 'Beginner'),
+            ('intermediate', 'Intermediate'),
+            ('advanced', 'Advanced'),
+        ],
+        default='beginner'
+    )
+    
+    # Course info
+    course_title = models.CharField(max_length=255)
+    course_price = models.DecimalField(max_digits=10, decimal_places=2)
+    course_duration = models.CharField(max_length=50)
+    course_level = models.CharField(
+        max_length=20,
+        choices=[
+            ('beginner', 'Beginner'),
+            ('intermediate', 'Intermediate'),
+            ('advanced', 'Advanced'),
+        ],
+        default='beginner'
+    )
+    
+    # Status
+    enrollment_date = models.DateTimeField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
+    payment_id = models.CharField(max_length=255, blank=True, null=True)
+    
+    class Meta:
+        ordering = ['-enrollment_date']
+        indexes = [
+            models.Index(fields=['email']),
+            models.Index(fields=['is_paid']),
+        ]
+    
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.course_title}"

@@ -10,7 +10,7 @@ export default function Courses() {
       icon: '💼',
       title: 'Business Strategy',
       duration: '8 weeks',
-      level: 'Intermediate',
+      level: 'intermediate',
       price: 4999,
       desc: 'Master strategic planning and business development',
       topics: ['Market analysis', 'Strategic planning', 'Growth strategies', 'Competitive analysis']
@@ -20,7 +20,7 @@ export default function Courses() {
       icon: '💻',
       title: 'Web Development',
       duration: '12 weeks',
-      level: 'Beginner to Intermediate',
+      level: 'beginner',
       price: 4999,
       desc: 'Learn modern web technologies and frameworks',
       topics: ['React.js', 'Node.js', 'Database design', 'API development']
@@ -30,7 +30,7 @@ export default function Courses() {
       icon: '🖥️',
       title: 'Backend Development',
       duration: '12 weeks',
-      level: 'Intermediate',
+      level: 'intermediate',
       price: 5999,
       desc: 'Master server-side development and APIs',
       topics: ['Node.js', 'Express.js', 'Database design', 'System architecture']
@@ -40,7 +40,7 @@ export default function Courses() {
       icon: '🐍',
       title: 'Python Beginner',
       duration: '6 weeks',
-      level: 'Beginner',
+      level: 'beginner',
       price: 2499,
       desc: 'Start your journey with Python programming',
       topics: ['Python basics', 'Data structures', 'Functions', 'Object-oriented programming']
@@ -50,7 +50,7 @@ export default function Courses() {
       icon: '⚙️',
       title: 'C Beginner to Intermediate',
       duration: '8 weeks',
-      level: 'Beginner to Intermediate',
+      level: 'beginner',
       price: 2499,
       desc: 'Learn C programming fundamentals',
       topics: ['C basics', 'Memory management', 'Pointers', 'File handling']
@@ -60,7 +60,7 @@ export default function Courses() {
       icon: '⚡',
       title: 'C++',
       duration: '10 weeks',
-      level: 'Beginner to Intermediate',
+      level: 'beginner',
       price: 2499,
       desc: 'Master C++ for advanced programming',
       topics: ['C++ basics', 'OOP concepts', 'STL', 'Performance optimization']
@@ -70,7 +70,7 @@ export default function Courses() {
       icon: '☕',
       title: 'Java',
       duration: '10 weeks',
-      level: 'Beginner to Intermediate',
+      level: 'beginner',
       price: 2499,
       desc: 'Build robust applications with Java',
       topics: ['Java basics', 'OOP', 'Collections', 'Multithreading']
@@ -80,7 +80,7 @@ export default function Courses() {
       icon: '🗄️',
       title: 'Databases',
       duration: '8 weeks',
-      level: 'Intermediate',
+      level: 'intermediate',
       price: 2999,
       desc: 'Master database design and management',
       topics: ['SQL', 'Database design', 'Indexing', 'Optimization']
@@ -90,7 +90,7 @@ export default function Courses() {
       icon: '📱',
       title: 'Mobile App Development',
       duration: '12 weeks',
-      level: 'Intermediate',
+      level: 'intermediate',
       price: 6999,
       desc: 'Build apps for iOS and Android',
       topics: ['React Native', 'Flutter', 'App design', 'Testing & deployment']

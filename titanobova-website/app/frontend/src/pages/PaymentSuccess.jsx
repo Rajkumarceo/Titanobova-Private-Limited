@@ -14,7 +14,7 @@ export default function PaymentSuccess() {
   }, [enrollment, navigate])
 
   const currentEnrollment = enrollment || JSON.parse(localStorage.getItem('currentEnrollment') || '{}')
-  const courseAmount = amount || currentEnrollment.coursePrice
+  const courseAmount = amount || currentEnrollment.course_price || currentEnrollment.coursePrice
 
   return (
     <div className="space-y-12">
@@ -36,12 +36,12 @@ export default function PaymentSuccess() {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-600 mb-1">Course Name</p>
-              <p className="text-lg font-bold text-gray-900">{currentEnrollment.courseTitle}</p>
+              <p className="text-lg font-bold text-gray-900">{currentEnrollment.course_title || currentEnrollment.courseTitle}</p>
             </div>
 
             <div>
               <p className="text-sm text-gray-600 mb-1">Student Name</p>
-              <p className="text-lg font-bold text-gray-900">{currentEnrollment.name}</p>
+              <p className="text-lg font-bold text-gray-900">{(currentEnrollment.first_name && currentEnrollment.last_name) ? `${currentEnrollment.first_name} ${currentEnrollment.last_name}` : (currentEnrollment.name || 'Student')}</p>
             </div>
 
             <div>
@@ -56,12 +56,12 @@ export default function PaymentSuccess() {
 
             <div className="pt-4 border-t border-gray-200">
               <p className="text-sm text-gray-600 mb-1">Course Duration</p>
-              <p className="text-lg font-bold text-gray-900">{currentEnrollment.courseDuration}</p>
+              <p className="text-lg font-bold text-gray-900">{currentEnrollment.course_duration || currentEnrollment.courseDuration}</p>
             </div>
 
             <div>
               <p className="text-sm text-gray-600 mb-1">Level</p>
-              <p className="text-lg font-bold text-gray-900">{currentEnrollment.courseLevel}</p>
+              <p className="text-lg font-bold text-gray-900">{currentEnrollment.course_level || currentEnrollment.courseLevel}</p>
             </div>
           </div>
         </div>
